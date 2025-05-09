@@ -9,7 +9,7 @@ def createChargeMatrix():
 
 #Now take this numpy array(s) and process it
 #Take in 2d matrix [r (charges), c (properties)] of elements of [x, y, q], where each element is a charge, x, y is the location and q is the charge of the charge in coulombs
-def createVectorField(charges):
+def generateVectorField(charges):
     #range is to find the max and min elements of y in the 2d matrix and then add some proportional padding to find the bounds of the graph of the vector field 
     #domain is the same as range but for the x properties of the charges
     #Step size: experiment with
@@ -27,29 +27,33 @@ def createVectorField(charges):
     x, y = np.meshgrid(np.linspace(domain_min, domain_max, num = 1000), np.linspace(range_min, range_max, num = 1000), indexing='xy')
 
     #generate one vector field using a q and x pos
-    E_x = np.array([])
-    E_y = np.array([])
-
+    E_x_list = []
+    E_y_list = []
 
     for charge in charges:
-        r = x - charge[0]
+        r = x.copy() - charge[0]
         E_temp = (charge[2])/(r**2) * np.abs(r)/r #q/r^2*unit(r)
-        r = y - charge[1]
-        E_temp = (r**2) * (1/charge[2]) * np.abs(r)/r #q/r^2*unit(r)
-        
-    
-    
-    
+        E_x_list.append(E_temp)
+        r = y.copy() - charge[1]
+        E_temp = (charge[2])/(r**2) * np.abs(r)/r  #q/r^2*unit(r)
+        E_y_list.append(E_temp)
 
-        
-    
+    #print(E_x_list)
+    #print(E_y_list)
 
+    E_x = E_x_list[0]
+    E_y = E_y_list[0]
+    for i in range(1, len(E_x_list)):
+        E_x = E_x_list[i]
+        E_y = E_y_list[i]
 
+    #print(E_x)
+    #print(E_y)
 
     
 
 #Finally take in the vector field matrix and use it to generate a figure in matplotlib
-def generateVectorField():
+def ():
 
 
 
