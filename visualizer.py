@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas
 
 #First function is to read the values of electric charges and their locations from a csv file, and populate a numpy array with their charge properties
-def createChargeMatrix():
+#def createChargeMatrix():
 
 
 
@@ -47,13 +47,29 @@ def generateVectorField(charges):
         E_x = E_x_list[i]
         E_y = E_y_list[i]
 
-    #print(E_x)
-    #print(E_y)
+    E_x = E_x * CONST_K
+    E_y = E_y * CONST_K
 
-    
+    return x, y, E_x, E_y
+
 
 #Finally take in the vector field matrix and use it to generate a figure in matplotlib
-def ():
+def generateVectorPlot(x, y, E_x, E_y, charges):
+        plt.figure(figsize=(10, 10))
+        plt.streamplot(x, y, E_x, E_y)
+        plt.plot(charges[:,0], charges[:,1], 'ok')
+        plt.title("Electromagnetic Field")
+        plt.show()
+
+np.random.seed(42)  # for reproducibility
+num_charges = 10
+charges = np.zeros((num_charges, 3))  # [x, y, q]
+charges[:, 0] = np.random.uniform(0.3, 1.7, num_charges)  # x positions
+charges[:, 1] = np.random.uniform(0.3, 1.7, num_charges)  # y positions
+charges[:, 2] = np.random.uniform(-5e-6, 5e-6, num_charges)  # q in Coulombscharges = np.array([
+
+x, y, E_x, E_y = generateVectorField(charges)
+generateVectorPlot(x, y, E_x, E_y, charges)
 
 
 
